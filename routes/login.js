@@ -4,29 +4,29 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 
 router.get('/', function (req, res, next) {
-    res.render('login', {message: ''});
+    if (req.session.user) {
+        return res.redirect('/');
+    }
+    res.render('login', {error: null});
 });
 
 router.post('/', async function (req, res, next) {
     const {email, password} = req.body;
+
     try {
-        const user = await User.findOne({email: email});
+        const user = await User.findOne({email});
+        console.log(user);
 
-        if (!user) {
-            res.render('login', {message: 'Invalid email or password!'});
-        }
-        if (!bcrypt.compare(password, user.password)) {
-            res.render('login', {message: 'Invalid email or password!'});
+        if (!user || !bcrypt.compareSync(password, user.password)) {
+            return res.render('login', {error: 'Invalid email or password'});
         }
 
-        req.session.user = {email};
+        req.session.user = {email: user.email}
 
-        res.redirect('/blogs');
-    } catch (err) {
-        console.log(err);
+        res.redirect(`/blogs`)
+    } catch (e) {
+        console.log(e)
     }
-
-    res.send('running');
-});
+})
 
 module.exports = router;

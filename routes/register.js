@@ -3,32 +3,39 @@ var router = express.Router();
 const User = require('../models/User');
 
 router.get('/', function (req, res, next) {
-    res.render('register', {message: ''});
+    if (req.session.user) {
+        return res.redirect('/');
+    }
+    res.render('register', {error: null});
 });
 
 router.post('/', async function (req, res, next) {
     const {email, password, confirmPassword} = req.body;
-    if (password !== confirmPassword) {
-        return res.render('register', {message: 'Passwords do not match!'});
+
+    if (confirmPassword !== password) {
+        res.render('register', {error: 'Passwords do not match'});
     }
+
     if (password.length < 8) {
-        return res.render('register', {message: 'Password must be at least 8 characters long!'});
+        return res.render('register', {error: 'Password should contain 8 characters'});
     }
 
     try {
-        const user = await User.findOne({email: email});
+        const users = await User.find({email});
 
-        if (user) {
-            return res.render('register', {message: 'User already exists!'});
+        if (users.length > 0) {
+            return res.render('register', {error: 'Email already registered'});
         }
 
-        const newUser = new User({email, password})
-        await newUser.save()
+        const salt = bcrypt.genSaltSync(10);
+        const hashedPassword = bcrypt.hashSync(password, salt);
+
+        const newUser = new User({email, password: hashedPassword})
+        await newUser.save();
 
         req.session.user = {email}
 
-        res.redirect('/blogs')
-
+        res.redirect('/blogs');
     } catch (e) {
         console.log(e)
     }
