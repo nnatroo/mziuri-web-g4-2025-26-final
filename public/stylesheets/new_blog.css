@@ -1,0 +1,62 @@
+.title {
+    font-weight: 700;
+    font-size: 120px;
+    line-height: 100%;
+    text-align: center;
+    color: rgba(26, 26, 26, 1);
+    margin-top: 50px;
+    border-top: 1px solid rgba(0, 0, 0, 0.34);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.34);
+
+
+}
+
+.new-blog-wrapper {
+    margin: 0 auto;
+
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 38px;
+    margin-top: 30px;
+}
+
+input, textarea {
+    width: 955px;
+    border-radius: 2px;
+    border: 1px solid rgba(109, 110, 118, 0.5);
+    padding: 24px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 28px;
+    color: rgba(35, 37, 54, 1);
+    outline: none;
+    resize: none;
+}
+
+textarea {
+    min-height: 227px;
+}
+
+button {
+    width: 955px;
+    background-color: rgba(26, 26, 26, 1);
+    color: rgba(255, 255, 255, 1);
+    font-family: Sen, sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32px;
+    padding: 20px;
+    box-sizing: content-box;
+    cursor: pointer;
+    transition: 0.2s all;
+
+
+}
+button:hover {
+    background-color: rgba(255, 255, 255, 1);
+    color: rgba(26, 26, 26, 1);
+}
