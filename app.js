@@ -7,7 +7,6 @@ const connectDB = require('./db');
 const session = require("express-session")
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
 const registerRouter = require('./routes/register');
 const loginRouter = require('./routes/login');
 const blogsRouter = require('./routes/blogs');
@@ -35,7 +34,6 @@ app.use(session({
 }));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/register', registerRouter);
 app.use('/login', loginRouter);
 app.use('/blogs', blogsRouter);

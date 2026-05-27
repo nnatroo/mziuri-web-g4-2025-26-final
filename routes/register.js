@@ -27,10 +27,7 @@ router.post('/', async function (req, res, next) {
             return res.render('register', {error: 'Email already registered'});
         }
 
-        const salt = bcrypt.genSaltSync(10);
-        const hashedPassword = bcrypt.hashSync(password, salt);
-
-        const newUser = new User({email, password: hashedPassword})
+        const newUser = new User({email, password})
         await newUser.save();
 
         req.session.user = {email}
