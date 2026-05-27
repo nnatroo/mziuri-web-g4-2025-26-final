@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../models/User');
 const Blog = require('../models/Blog');
 
+
 const requireAuth = (req, res, next) => {
     if (req.session.user) {
         next()

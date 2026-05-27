@@ -5,6 +5,125 @@
     left: 50%;
     transform: translate(-50%, 0);
     margin-top: 50px;
-    border-top: 1px solid rgba(0, 0, 0, 0.34);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.34)
 }
+
+.new-container{
+    margin-top: 30px;
+    margin-left: 150px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.small-blog{
+    display: flex;
+    flex-direction: column;
+}
+
+.blogs-paragraph{
+    font-family: Inter, sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 32px;
+    color: #1A1A1A;
+    margin-left: 150px;
+    margin-top: 30px;
+}
+
+.posts-container {
+    margin-top: 32px;
+    display: flex;
+    width: 1440px;
+    height: 556px;
+    gap: 64px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.review-blog {
+    display: flex;
+    flex-direction: column;
+}
+
+.author{
+    margin-top: 32px;
+    font-family: Inter, sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: #6941C6;
+}
+
+.title{
+    display: flex;
+    justify-content: space-between;
+    width: 592px;
+    height: 32px;
+    font-family: Inter, sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 32px;
+    color: #1A1A1A;
+    margin-top: 12px;
+}
+
+.description{
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    max-width: 592px;
+    margin-top: 12px;
+}
+
+.categories {
+    display: flex;
+    gap: 18px;
+    margin-top: 12px;
+}
+
+.category{
+    font-family: Inter, sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+}
+
+.migrating-blog{
+    display: flex;
+}
+
+.migrating-texts{
+    display: flex;
+    flex-direction: column;
+}
+
+.ux-design{
+    color: #6941C6;
+}
+
+.ux-research{
+    color: #3538CD;
+}
+
+.ux-presentation{
+    color: #C11574;
+}
+
+.migrating-design{
+    color: #026AA2;
+}
+
+.migrating-research{
+    color: #C11574;
+}
+
+.api-design{
+    color: #027A48;
+}
+
+.api-research{
+    color: #C11574;
+}
+
