@@ -11,10 +11,12 @@ const requireAuth = (req, res, next) => {
     }
 }
 
-router.get('/', requireAuth, function (req, res, next) {
+router.get('/', requireAuth, async function (req, res, next) {
     const email = req.session.user.email;
-    res.render('blogs', {email});
-});
+
+    const blogs =await Blog.find().populate('author');
+    res.render('blogs', {email, blogs});
+})
 
 router.get('/new', requireAuth, function (req, res, next) {
     const email = req.session.user.email;
@@ -58,6 +60,17 @@ router.post('/new', requireAuth, async function (req, res, next) {
         console.log(e)
     }
 
+})
+
+router.get('/', requireAuth, function (req, res, next) {
+    const email = req.session.user.email;
+    const recentBlogs = {
+        author,
+        date,
+        review,
+        description,
+        tags
+    }
 })
 
 module.exports = router;

@@ -21,6 +21,30 @@
     THE BLOG
 </h1>
 
+<section class="recent-blog">
+    <h2>Recent blog posts</h2>
+
+    <div class="blog-grid">
+        <% blogs.forEach(blog, index)=>{%>
+    <div class="blog-card">
+        <%if(index == 0){%>
+        <img class="first" src="./images/blog1.png" alt="chair image">
+        <%}%>
+            <%if(index == 1){%>
+                <img class="second" src="./images/blog2.png" alt="meeting image">
+            <%}%>
+            <%if(index == 2){%>
+                <img class="third" src="./images/blog3.png" alt="computer image">
+            <%}%>
+    </div>
+        <p class="author"><%=blog.author%></p>
+        <p class="date"><%=blog.date%></p>
+        <p class="review"><%=blog.review%></p>
+        <p class="description"><%=blog.description%></p>
+        <p class="tags"><%=blog.tags%></p>
+        <%}%>
+    </div>
+</section>
 
 </body>
 </html>
