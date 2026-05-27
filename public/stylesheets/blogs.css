@@ -8,3 +8,70 @@
     border-top: 1px solid rgba(0, 0, 0, 0.34);
     border-bottom: 1px solid rgba(0, 0, 0, 0.34)
 }
+
+.blog-posts {
+    left: 50%;
+    transform: translate(-50%, 0);
+    display: flex;
+}
+
+.blog-posts-title {
+    font-family: Inter, sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 32px;
+    color: rgba(26, 26, 26, 1);
+    margin-left: 160px;
+    margin-top: 60px;
+}
+
+.blog-post {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    max-width: 590px;
+}
+
+.auth-date {
+    font-family: Inter, sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: rgba(105, 65, 198, 1);
+}
+
+.title {
+    font-family: Inter, sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 32px;
+    color: rgba(26, 26, 26, 1);
+    margin-top: 12px;
+}
+
+.description {
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: rgba(102, 112, 133, 1);
+    margin-top: 12px;
+}
+
+.spacing {
+    margin-top: 32px;
+}
+.blogs {display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+}
+.monitor-blog {
+    display: flex;
+
+}
+.spacing-monitor {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
