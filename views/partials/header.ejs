@@ -1,4 +1,5 @@
 <header class="container">
+
     <div class="username">
         <a href="/">
             <p>
@@ -6,6 +7,7 @@
             </p>
         </a>
     </div>
+
     <div class="nav-wrapper">
         <nav class="main-nav">
             <ul class="nav-list-wrapper">
@@ -19,4 +21,42 @@
             </ul>
         </nav>
     </div>
+
+    <div class="burger-menu-icon">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+    </div>
+
+    <div class="burger-menu">
+
+        <div class="username-mobile">
+            <a href="/">
+                <p>
+                    <%= email %>
+                </p>
+            </a>
+        </div>
+
+        <div class="nav-wrapper-mobile">
+            <nav class="main-nav-mobile">
+                <ul class="nav-list-wrapper-mobile">
+                    <li><a class="nav-link-mobile" href="/">Blog</a></li>
+                    <li><a class="nav-link-mobile" href="/about">About</a></li>
+                    <li><a class="nav-link-mobile" href="/newsletter">Newsletter</a></li>
+                    <% if (email){ %>
+                        <li><a class="nav-link-mobile" href="/blogs/new">Create New Blog</a></li>
+                        <li><a class="nav-link-mobile" style="color: darkred" href="/logout">Logout</a></li>
+                    <% } %>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <figure class="close-btn-wrapper">
+        <img src="/images/close-button-icon.svg" alt="close-button">
+    </figure>
+
 </header>
+
+<script src="/javascripts/header.js"></script>
