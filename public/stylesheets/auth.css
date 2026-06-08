@@ -68,6 +68,7 @@ input {
     line-height: 28px;
     width: 955px;
     outline: none;
+    box-sizing: border-box;
 }
 
 @media (max-width: 1440px) {
@@ -82,8 +83,28 @@ input {
     }
 }
 
+.password-input-wrapper {
+    display: flex;
+    align-items: center;
+    border: 1px solid rgba(109, 110, 118, 0.50);
+    width: 955px;
+
+    input {
+        border: none;
+        width: auto;
+        flex: 1;
+    }
+
+    .toggle-password-icon {
+        padding-right: 24px;
+        cursor: pointer;
+    }
+}
+
 button {
     width: 955px;
+    padding: 20px 24px;
+    box-sizing: border-box;
     background-color: #1A1A1A;
     color: #FFF;
     text-align: center;
@@ -92,8 +113,6 @@ button {
     font-style: normal;
     font-weight: 700;
     line-height: 32px;
-    padding: 20px 24px;
-    box-sizing: content-box;
     border: 1px solid #1A1A1A;
     cursor: pointer;
     transition: all 0.2s;

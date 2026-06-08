@@ -26,7 +26,10 @@
 
     <form action="/login" method="POST">
         <input type="email" name="email" placeholder="Email" required>
-        <input type="password" name="password" placeholder="Password" required>
+        <div class="password-input-wrapper">
+            <input class="password-input" type="password" name="password" placeholder="Password" autocomplete="hidden" required>
+            <img class="toggle-password-icon" src='/images/show-password-icon.svg' alt="Show Password">
+        </div>
         <button type="submit">Sign In</button>
     </form>
 
@@ -34,6 +37,8 @@
 </div>
 
 <%- include('partials/footer'); %>
+
+<script src="/javascripts/auth.js"></script>
 
 </body>
 </html>
