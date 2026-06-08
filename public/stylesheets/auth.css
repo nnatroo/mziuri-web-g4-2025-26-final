@@ -83,6 +83,14 @@ input {
     }
 }
 
+
+@media (max-width: 576px) {
+    input {
+        padding: 12px;
+    }
+}
+
+
 .password-input-wrapper {
     display: flex;
     align-items: center;
@@ -95,9 +103,22 @@ input {
         flex: 1;
     }
 
+
     .toggle-password-icon {
         padding-right: 24px;
         cursor: pointer;
+    }
+}
+
+@media (max-width: 1440px) {
+    .password-input-wrapper {
+        width: 755px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .password-input-wrapper {
+        width: 90%;
     }
 }
 
