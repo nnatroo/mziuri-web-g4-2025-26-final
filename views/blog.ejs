@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The Blog | Blogs</title>
+    <link rel="stylesheet" href="/stylesheets/header.css">
+    <link rel="stylesheet" href="/stylesheets/footer.css">
+    <link rel="stylesheet" href="/stylesheets/blog.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Sen:wght@400..800&display=swap"
+          rel="stylesheet">
+    <link rel="shortcut icon" href="/images/favicon.svg" type="image/x-icon">
+</head>
+<body>
+<%- include('partials/header', {email: email}); %>
+
+<div class="container blog-details-wrapper">
+    <div class="recent-blogs-wrapper">
+        <h2 class="title">Recent blog posts</h2>
+        <% recentBlogs.forEach((blog) => { %>
+            <div>
+                <figure>
+                    <img src="/images/thumbnails/thumbnail-6.png" alt="Thumbnail 6">
+                </figure>
+                <div>
+                    <p class="meta"><%= blog.author.email %>
+                        • <%= blog.date.getDate() %> <%= blog.date.toLocaleString('default', {month: 'short'}) %> <%= blog.date.getFullYear() %></p>
+                    <figure class="blog-title-wrapper">
+                        <a href="/blogs/<%= blog._id %>"><%= blog.title %></a>
+                        <img src="/images/arrow-up-icon.svg" alt="Arrow up icon">
+                    </figure>
+                    <p class="description"><%= blog.description %></p>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+    <div class="blog-content">
+
+    </div>
+</div>
+
+<%- include('partials/footer'); %>
+
+</body>
+</html>

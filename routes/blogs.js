@@ -57,10 +57,19 @@ router.post('/new', requireAuth, async function (req, res, next) {
         const newBlog = await Blog(newBlogObj);
         await newBlog.save();
         res.redirect('/blogs');
-    } catch (e){
+    } catch (e) {
         console.log(e)
     }
 
 })
+
+router.get('/:blogId', requireAuth, async function (req, res, next) {
+    const email = req.session.user.email;
+    const blogId = req.params.blogId;
+    const blog = await Blog.findById(blogId).populate("author", 'email')
+    const recentBlogs = await Blog.find().sort({date: -1}).populate("author", 'email').limit(8)
+
+    res.render('blog', {email, recentBlogs, blog});
+});
 
 module.exports = router;
