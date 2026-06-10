@@ -83,6 +83,29 @@
     </div>
 </div>
 
+<section class="container all-blog-posts-wrapper">
+    <h2 class="title">All blog posts</h2>
+    <div class="blogs-grid">
+        <% blogs.forEach((blog) => { %>
+            <div class="standard-card">
+                <figure>
+                    <img src="/images/thumbnails/thumbnail-5.png" alt="Thumbnail 5">
+                </figure>
+                <div>
+                    <p class="meta"><%= blog.author.email %>
+                        • <%= blog.date.getDate() %> <%= blog.date.toLocaleString('default', {month: 'short'}) %> <%= blog.date.getFullYear() %></p>
+                    <figure class="blog-title-wrapper">
+                        <a href="/blogs/<%= blog._id %>"><%= blog.title %></a>
+                        <img src="/images/arrow-up-icon.svg" alt="Arrow up icon">
+                    </figure>
+                    <p><%= blog.description %></p>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+</section>
+
+<%- include('partials/footer'); %>
 
 </body>
 </html>
