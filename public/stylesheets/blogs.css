@@ -95,3 +95,49 @@
     line-height: 24px;
     color: rgba(102, 112, 133, 1);
 }
+
+.col-2 {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.small-card {
+    display: flex;
+    gap: 24px;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.meta {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: #6941C6;
+}
+
+.title {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 28px;
+    color: #1A1A1A;
+    margin-top: 12px;
+}
+
+.description {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #667085;
+    margin-top: 8px;
+}
+
+.wide-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 60px;
+}
