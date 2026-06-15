@@ -1,6 +1,9 @@
 .blog-details-wrapper {
     left: 50%;
     transform: translateX(-50%);
+    display: flex;
+    margin-top: 78px;
+    gap: 32px;
 }
 
 .recent-blogs-wrapper {
@@ -15,7 +18,6 @@
     font-size: 24px;
     line-height: 32px;
     color: #1A1A1A;
-    margin-top: 78px;
 }
 
 .blog-title-wrapper {
@@ -46,3 +48,101 @@
     color: #667085;
     margin-top: 8px;
 }
+
+.blog-content {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.blog-content-title {
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 32px;
+    color: #000000;
+}
+
+.newsletter-widget-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 32px;
+}
+
+.newsletter-widget-subtitle {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: #7F56D9;
+}
+
+.newsletter-widget-title {
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 60px;
+    text-align: center;
+    color: #000000;
+    margin-top: 12px;
+}
+
+.newsletter-widget-description {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 30px;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.8);
+    margin-top: 24px;
+}
+
+.newsletter-widget-form-wrapper {
+    display: flex;
+    margin-top: 40px;
+    gap: 16px;
+}
+
+.newsletter-widget-input {
+    width: 360px;
+    height: 48px;
+    border-radius: 8px;
+    border: 1px solid rgba(208, 213, 221, 1);
+    padding: 0 14px 0 16px;
+    outline: none;
+}
+
+.newsletter-widget-input-label {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: rgba(0, 0, 0, 0.8);
+    margin-top: 8px;
+}
+
+.newsletter-widget-input-label a {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: rgba(0, 0, 0, 0.8);
+    text-decoration: underline;
+}
+
+.newsletter-widget-subscribe-btn {
+    background: rgba(127, 86, 217, 1);
+    color: #fff;
+    border-radius: 8px;
+    border: 1px solid rgba(127, 86, 217, 1);
+    height: 48px;
+    padding-inline: 20px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.newsletter-widget-subscribe-btn:hover {
+    background-color: transparent;
+    color: rgba(127, 86, 217, 1);
+}
+

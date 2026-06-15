@@ -12,6 +12,7 @@ const registerRouter = require('./routes/register');
 const loginRouter = require('./routes/login');
 const blogsRouter = require('./routes/blogs');
 const logoutRouter = require('./routes/logout');
+const newslettersRouter = require('./routes/newsletters');
 
 const app = express();
 connectDB();
@@ -40,6 +41,7 @@ app.use('/register', registerRouter);
 app.use('/login', loginRouter);
 app.use('/blogs', blogsRouter);
 app.use('/logout', logoutRouter);
+app.use('/newsletters', newslettersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

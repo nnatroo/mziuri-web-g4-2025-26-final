@@ -27,7 +27,8 @@
                 </figure>
                 <div>
                     <p class="meta"><%= blog.author.email %>
-                        • <%= blog.date.getDate() %> <%= blog.date.toLocaleString('default', {month: 'short'}) %> <%= blog.date.getFullYear() %></p>
+                        • <%= blog.date.getDate() %> <%= blog.date.toLocaleString('default', {month: 'short'}) %> <%= blog.date.getFullYear() %>
+                    </p>
                     <figure class="blog-title-wrapper">
                         <a href="/blogs/<%= blog._id %>"><%= blog.title %></a>
                         <img src="/images/arrow-up-icon.svg" alt="Arrow up icon">
@@ -38,7 +39,44 @@
         <% }) %>
     </div>
     <div class="blog-content">
+        <p class="meta">
+            <%= blog.author.email %>
+            • <%= blog.date.getDate() %> <%= blog.date.toLocaleString('default', {month: 'short'}) %> <%= blog.date.getFullYear() %>
+        </p>
+        <h2 class="blog-content-title">
+            <%= blog.title %>
+        </h2>
+        <div>
+            <p class="blog-content-text">
+                <%= blog.content %>
+            </p>
+        </div>
 
+        <div class="newsletter-widget-wrapper">
+            <p class="newsletter-widget-subtitle">
+                Newsletter
+            </p>
+
+            <h2 class="newsletter-widget-title">
+                Stories and interviews
+            </h2>
+
+            <p class="newsletter-widget-description">
+                Subscribe to learn about new product features, the latest in technology, solutions, and updates.
+            </p>
+
+            <form class="newsletter-widget-form-wrapper" action="/newsletters/subscribe" method="POST">
+                <div class="newsletter-widget-input-wrapper">
+                    <input type="hidden" name="returnUrl" value="/blogs/<%= blog._id %>">
+                    <input name="subscribeEmail" class="newsletter-widget-input" type="text"
+                           placeholder="Enter your email">
+                    <p class="newsletter-widget-input-label">
+                        We care about your data in our <a href="/">privacy policy</a>
+                    </p>
+                </div>
+                <button type="submit" class="newsletter-widget-subscribe-btn">Subscribe</button>
+            </form>
+        </div>
     </div>
 </div>
 
