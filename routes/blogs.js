@@ -183,6 +183,71 @@ router.post('/:blogId/comments/:commentId/replies/:replyId/like', requireAuth, a
     }
 });
 
+router.post('/:blogId/comments/:commentId/edit', requireAuth, async function (req, res, next) {
+    const email = req.session.user.email;
+    const {blogId, commentId} = req.params;
+    const {content} = req.body;
+
+    if (!content || !content.trim()) {
+        return res.redirect(`/blogs/${blogId}`);
+    }
+
+    try {
+        const user = await User.findOne({email});
+        const blog = await Blog.findById(blogId);
+        const comment = blog && blog.comments.id(commentId);
+
+        if (!comment) {
+            return res.redirect(`/blogs/${blogId}`);
+        }
+
+        if (!comment.author.equals(user._id)) {
+            return res.redirect(`/blogs/${blogId}`);
+        }
+
+        comment.content = content.trim();
+        comment.editedAt = new Date();
+        await blog.save();
+        res.redirect(`/blogs/${blogId}`);
+    } catch (e) {
+        console.log(e);
+        next(e);
+    }
+});
+
+router.post('/:blogId/comments/:commentId/replies/:replyId/edit', requireAuth, async function (req, res, next) {
+    const email = req.session.user.email;
+    const {blogId, commentId, replyId} = req.params;
+    const {content} = req.body;
+
+    if (!content || !content.trim()) {
+        return res.redirect(`/blogs/${blogId}`);
+    }
+
+    try {
+        const user = await User.findOne({email});
+        const blog = await Blog.findById(blogId);
+        const comment = blog && blog.comments.id(commentId);
+        const reply = comment && comment.replies.id(replyId);
+
+        if (!reply) {
+            return res.redirect(`/blogs/${blogId}`);
+        }
+
+        if (!reply.author.equals(user._id)) {
+            return res.redirect(`/blogs/${blogId}`);
+        }
+
+        reply.content = content.trim();
+        reply.editedAt = new Date();
+        await blog.save();
+        res.redirect(`/blogs/${blogId}`);
+    } catch (e) {
+        console.log(e);
+        next(e);
+    }
+});
+
 router.post('/:blogId/comments/:commentId/delete', requireAuth, async function (req, res, next) {
     const email = req.session.user.email;
     const {blogId, commentId} = req.params;

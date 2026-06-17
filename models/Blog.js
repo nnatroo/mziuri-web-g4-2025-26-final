@@ -15,6 +15,10 @@ const commentSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    editedAt: {
+        type: Date,
+        default: null,
+    },
     replies: [{
         author: {
             type: mongoose.Schema.Types.ObjectId,
@@ -29,6 +33,10 @@ const commentSchema = new mongoose.Schema({
         date: {
             type: Date,
             default: Date.now,
+        },
+        editedAt: {
+            type: Date,
+            default: null,
         },
         likes: [{
             type: mongoose.Schema.Types.ObjectId,

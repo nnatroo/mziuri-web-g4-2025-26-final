@@ -106,13 +106,19 @@
                 <% blog.comments.slice().reverse().forEach((comment) => { %>
                     <% const liked = comment.likes.some((id) => id.toString() === currentUserId); %>
                     <% const canDeleteComment = currentUserId && (currentUserId === idOf(comment.author) || isBlogAuthor); %>
+                    <% const canEditComment = currentUserId && currentUserId === idOf(comment.author); %>
                     <article class="comment">
                         <div class="comment-avatar"><%= initial(comment.author && comment.author.email) %></div>
                         <div class="comment-body">
                             <div class="comment-header">
                                 <div>
                                     <p class="comment-author"><%= displayName(comment.author && comment.author.email) %></p>
-                                    <p class="comment-date"><%= formatDate(comment.date) %></p>
+                                    <p class="comment-date">
+                                        <%= formatDate(comment.date) %>
+                                        <% if (comment.editedAt) { %>
+                                            <span class="comment-edited">· edited on <%= formatDate(comment.editedAt) %></span>
+                                        <% } %>
+                                    </p>
                                 </div>
                                 <form class="comment-like-form"
                                       action="/blogs/<%= blog._id %>/comments/<%= comment._id %>/like" method="POST">
@@ -129,11 +135,24 @@
                                 </form>
                             </div>
 
-                            <p class="comment-content"><%= comment.content %></p>
+                            <div class="comment-text">
+                                <p class="comment-content"><%= comment.content %></p>
+                                <% if (canEditComment) { %>
+                                    <form class="comment-edit-form" id="edit-form-<%= comment._id %>"
+                                          action="/blogs/<%= blog._id %>/comments/<%= comment._id %>/edit" method="POST">
+                                        <textarea name="content" class="comment-input" rows="3" required><%= comment.content %></textarea>
+                                        <button type="submit" class="comment-reply-submit">Save</button>
+                                    </form>
+                                <% } %>
+                            </div>
 
                             <div class="comment-actions">
                                 <button type="button" class="comment-reply-toggle"
                                         data-target="reply-form-<%= comment._id %>">Reply</button>
+                                <% if (canEditComment) { %>
+                                    <button type="button" class="comment-edit-toggle"
+                                            data-edit-target="edit-form-<%= comment._id %>">Edit</button>
+                                <% } %>
                                 <% if (canDeleteComment) { %>
                                     <form class="comment-delete-form"
                                           action="/blogs/<%= blog._id %>/comments/<%= comment._id %>/delete" method="POST">
@@ -154,6 +173,7 @@
                                     <% comment.replies.forEach((reply) => { %>
                                         <% const replyLiked = reply.likes.some((id) => id.toString() === currentUserId); %>
                                         <% const canDeleteReply = currentUserId && (currentUserId === idOf(reply.author) || isBlogAuthor); %>
+                                        <% const canEditReply = currentUserId && currentUserId === idOf(reply.author); %>
                                         <article class="comment comment--reply">
                                             <div class="comment-avatar comment-avatar--small">
                                                 <%= initial(reply.author && reply.author.email) %>
@@ -162,7 +182,12 @@
                                                 <div class="comment-header">
                                                     <div>
                                                         <p class="comment-author"><%= displayName(reply.author && reply.author.email) %></p>
-                                                        <p class="comment-date"><%= formatDate(reply.date) %></p>
+                                                        <p class="comment-date">
+                                                            <%= formatDate(reply.date) %>
+                                                            <% if (reply.editedAt) { %>
+                                                                <span class="comment-edited">· edited on <%= formatDate(reply.editedAt) %></span>
+                                                            <% } %>
+                                                        </p>
                                                     </div>
                                                     <form class="comment-like-form"
                                                           action="/blogs/<%= blog._id %>/comments/<%= comment._id %>/replies/<%= reply._id %>/like" method="POST">
@@ -178,13 +203,28 @@
                                                         </button>
                                                     </form>
                                                 </div>
-                                                <p class="comment-content"><%= reply.content %></p>
-                                                <% if (canDeleteReply) { %>
-                                                    <div class="comment-actions">
-                                                        <form class="comment-delete-form"
-                                                              action="/blogs/<%= blog._id %>/comments/<%= comment._id %>/replies/<%= reply._id %>/delete" method="POST">
-                                                            <button type="submit" class="comment-delete-btn">Delete</button>
+                                                <div class="comment-text">
+                                                    <p class="comment-content"><%= reply.content %></p>
+                                                    <% if (canEditReply) { %>
+                                                        <form class="comment-edit-form" id="edit-form-<%= reply._id %>"
+                                                              action="/blogs/<%= blog._id %>/comments/<%= comment._id %>/replies/<%= reply._id %>/edit" method="POST">
+                                                            <textarea name="content" class="comment-input" rows="2" required><%= reply.content %></textarea>
+                                                            <button type="submit" class="comment-reply-submit">Save</button>
                                                         </form>
+                                                    <% } %>
+                                                </div>
+                                                <% if (canEditReply || canDeleteReply) { %>
+                                                    <div class="comment-actions">
+                                                        <% if (canEditReply) { %>
+                                                            <button type="button" class="comment-edit-toggle"
+                                                                    data-edit-target="edit-form-<%= reply._id %>">Edit</button>
+                                                        <% } %>
+                                                        <% if (canDeleteReply) { %>
+                                                            <form class="comment-delete-form"
+                                                                  action="/blogs/<%= blog._id %>/comments/<%= comment._id %>/replies/<%= reply._id %>/delete" method="POST">
+                                                                <button type="submit" class="comment-delete-btn">Delete</button>
+                                                            </form>
+                                                        <% } %>
                                                     </div>
                                                 <% } %>
                                             </div>

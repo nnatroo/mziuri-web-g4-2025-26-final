@@ -346,6 +346,38 @@
     text-decoration: underline;
 }
 
+.comment-edit-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: rgba(127, 86, 217, 1);
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 0;
+}
+
+.comment-edit-toggle:hover {
+    text-decoration: underline;
+}
+
+.comment-edited {
+    color: #98A2B3;
+    font-style: italic;
+}
+
+.comment-edit-form {
+    display: none;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    margin-top: 6px;
+}
+
+.comment-edit-form.opened {
+    display: flex;
+}
+
 .comment-delete-form {
     margin: 0;
 }

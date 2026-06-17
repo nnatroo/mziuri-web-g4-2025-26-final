@@ -17,6 +17,33 @@ replyToggleButtons.forEach((button) => {
     });
 });
 
+const editToggleButtons = document.querySelectorAll('.comment-edit-toggle');
+
+editToggleButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+        const form = document.getElementById(button.dataset.editTarget);
+
+        if (!form) return;
+
+        const isOpen = form.classList.toggle('opened');
+        button.textContent = isOpen ? 'Cancel' : 'Edit';
+
+        const wrapper = form.closest('.comment-text');
+        const content = wrapper && wrapper.querySelector('.comment-content');
+        if (content) content.style.display = isOpen ? 'none' : '';
+
+        if (isOpen) {
+            const textarea = form.querySelector('textarea');
+            if (textarea) {
+                textarea.focus();
+                const value = textarea.value;
+                textarea.value = '';
+                textarea.value = value;
+            }
+        }
+    });
+});
+
 const deleteForms = document.querySelectorAll('.comment-delete-form');
 
 deleteForms.forEach((form) => {
