@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The Blog | My Blogs</title>
+    <link rel="stylesheet" href="/stylesheets/header.css">
+    <link rel="stylesheet" href="/stylesheets/footer.css">
+    <link rel="stylesheet" href="/stylesheets/blogs.css">
+    <link rel="stylesheet" href="/stylesheets/my_blogs.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Sen:wght@400..800&display=swap"
+          rel="stylesheet">
+    <link rel="shortcut icon" href="/images/favicon.svg" type="image/x-icon">
+</head>
+<body>
+<%- include('partials/header', {email: email}); %>
+
+<section class="container my-blogs-wrapper">
+    <h2 class="my-blogs-title">My blog posts</h2>
+
+    <% if (blogs.length === 0) { %>
+        <p class="my-blogs-empty">
+            You haven't published any posts yet. <a href="/blogs/new">Create your first blog</a>.
+        </p>
+    <% } else { %>
+        <div class="blogs-grid">
+            <% blogs.forEach((blog) => { %>
+                <div class="standard-card">
+                    <figure class="card-thumb">
+                        <img src="<%= blog.thumbnail || '/images/thumbnails/thumbnail-5.png' %>" alt="<%= blog.title %>">
+                    </figure>
+                    <div>
+                        <p class="meta"><%= blog.author.email %>
+                            • <%= blog.date.getDate() %> <%= blog.date.toLocaleString('default', {month: 'short'}) %> <%= blog.date.getFullYear() %></p>
+                        <figure class="blog-title-wrapper">
+                            <a href="/blogs/<%= blog._id %>"><%= blog.title %></a>
+                            <img src="/images/arrow-up-icon.svg" alt="Arrow up icon">
+                        </figure>
+                        <p><%= blog.description %></p>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    <% } %>
+</section>
+
+<%- include('partials/footer'); %>
+
+</body>
+</html>

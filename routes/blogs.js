@@ -80,6 +80,22 @@ router.get('/bookmarks', requireAuth, async function (req, res, next) {
     }
 })
 
+router.get('/my-blogs', requireAuth, async function (req, res, next) {
+    const email = req.session.user.email;
+
+    try {
+        const currentUser = await User.findOne({email});
+        const blogs = currentUser
+            ? await Blog.find({author: currentUser._id}).sort({date: -1}).populate('author', 'email')
+            : [];
+
+        res.render('my_blogs', {email, blogs});
+    } catch (e) {
+        console.log(e);
+        next(e);
+    }
+})
+
 router.post('/new', requireAuth, uploadThumbnail, async function (req, res, next) {
     const {title, description, content} = req.body;
     const email = req.session.user.email;
