@@ -16,3 +16,13 @@ replyToggleButtons.forEach((button) => {
         }
     });
 });
+
+const deleteForms = document.querySelectorAll('.comment-delete-form');
+
+deleteForms.forEach((form) => {
+    form.addEventListener('submit', (event) => {
+        if (!window.confirm('Are you sure you want to delete this?')) {
+            event.preventDefault();
+        }
+    });
+});

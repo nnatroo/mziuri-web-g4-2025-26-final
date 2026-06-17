@@ -82,6 +82,9 @@
             const formatDate = (d) => `${d.toLocaleString('default', {month: 'short'})} ${d.getDate()}, ${d.getFullYear()}`;
             const displayName = (mail) => (mail || 'user').split('@')[0];
             const initial = (mail) => (mail || 'u').charAt(0).toUpperCase();
+            const idOf = (ref) => (ref && ref._id ? ref._id.toString() : (ref ? ref.toString() : null));
+            const blogAuthorId = idOf(blog.author);
+            const isBlogAuthor = currentUserId && currentUserId === blogAuthorId;
         %>
 
         <section class="comments-wrapper">
@@ -102,6 +105,7 @@
 
                 <% blog.comments.slice().reverse().forEach((comment) => { %>
                     <% const liked = comment.likes.some((id) => id.toString() === currentUserId); %>
+                    <% const canDeleteComment = currentUserId && (currentUserId === idOf(comment.author) || isBlogAuthor); %>
                     <article class="comment">
                         <div class="comment-avatar"><%= initial(comment.author && comment.author.email) %></div>
                         <div class="comment-body">
@@ -127,8 +131,16 @@
 
                             <p class="comment-content"><%= comment.content %></p>
 
-                            <button type="button" class="comment-reply-toggle"
-                                    data-target="reply-form-<%= comment._id %>">Reply</button>
+                            <div class="comment-actions">
+                                <button type="button" class="comment-reply-toggle"
+                                        data-target="reply-form-<%= comment._id %>">Reply</button>
+                                <% if (canDeleteComment) { %>
+                                    <form class="comment-delete-form"
+                                          action="/blogs/<%= blog._id %>/comments/<%= comment._id %>/delete" method="POST">
+                                        <button type="submit" class="comment-delete-btn">Delete</button>
+                                    </form>
+                                <% } %>
+                            </div>
 
                             <form class="comment-reply-form" id="reply-form-<%= comment._id %>"
                                   action="/blogs/<%= blog._id %>/comments/<%= comment._id %>/replies" method="POST">
@@ -141,6 +153,7 @@
                                 <div class="comment-replies">
                                     <% comment.replies.forEach((reply) => { %>
                                         <% const replyLiked = reply.likes.some((id) => id.toString() === currentUserId); %>
+                                        <% const canDeleteReply = currentUserId && (currentUserId === idOf(reply.author) || isBlogAuthor); %>
                                         <article class="comment comment--reply">
                                             <div class="comment-avatar comment-avatar--small">
                                                 <%= initial(reply.author && reply.author.email) %>
@@ -166,6 +179,14 @@
                                                     </form>
                                                 </div>
                                                 <p class="comment-content"><%= reply.content %></p>
+                                                <% if (canDeleteReply) { %>
+                                                    <div class="comment-actions">
+                                                        <form class="comment-delete-form"
+                                                              action="/blogs/<%= blog._id %>/comments/<%= comment._id %>/replies/<%= reply._id %>/delete" method="POST">
+                                                            <button type="submit" class="comment-delete-btn">Delete</button>
+                                                        </form>
+                                                    </div>
+                                                <% } %>
                                             </div>
                                         </article>
                                     <% }) %>
