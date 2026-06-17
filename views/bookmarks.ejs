@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The Blog | Bookmarks</title>
+    <link rel="stylesheet" href="/stylesheets/header.css">
+    <link rel="stylesheet" href="/stylesheets/footer.css">
+    <link rel="stylesheet" href="/stylesheets/blogs.css">
+    <link rel="stylesheet" href="/stylesheets/bookmarks.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Sen:wght@400..800&display=swap"
+          rel="stylesheet">
+    <link rel="shortcut icon" href="/images/favicon.svg" type="image/x-icon">
+</head>
+<body>
+<%- include('partials/header', {email: email}); %>
+
+<section class="container bookmarks-wrapper">
+    <h2 class="bookmarks-title">Bookmarked posts</h2>
+
+    <% if (bookmarks.length === 0) { %>
+        <p class="bookmarks-empty">
+            You haven't bookmarked any posts yet. Browse the <a href="/blogs">blog</a> and tap the bookmark icon to save one.
+        </p>
+    <% } else { %>
+        <div class="blogs-grid">
+            <% bookmarks.forEach((blog) => { %>
+                <div class="standard-card">
+                    <figure class="card-thumb">
+                        <img src="<%= blog.thumbnail || '/images/thumbnails/thumbnail-5.png' %>" alt="<%= blog.title %>">
+                        <form class="bookmark-form bookmark-form--overlay"
+                              action="/blogs/<%= blog._id %>/bookmark" method="POST">
+                            <input type="hidden" name="returnUrl" value="/blogs/bookmarks">
+                            <button type="submit" class="bookmark-btn bookmark-btn--icon bookmarked"
+                                    aria-label="Remove bookmark">
+                                <svg class="bookmark-icon" width="20" height="20" viewBox="0 0 24 24"
+                                     fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M6 4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v17l-6-3.5L6 21V4Z"
+                                          stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </form>
+                    </figure>
+                    <div>
+                        <p class="meta"><%= blog.author.email %>
+                            • <%= blog.date.getDate() %> <%= blog.date.toLocaleString('default', {month: 'short'}) %> <%= blog.date.getFullYear() %></p>
+                        <figure class="blog-title-wrapper">
+                            <a href="/blogs/<%= blog._id %>"><%= blog.title %></a>
+                            <img src="/images/arrow-up-icon.svg" alt="Arrow up icon">
+                        </figure>
+                        <p><%= blog.description %></p>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    <% } %>
+</section>
+
+<%- include('partials/footer'); %>
+
+</body>
+</html>

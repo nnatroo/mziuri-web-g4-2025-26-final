@@ -185,3 +185,51 @@
     object-fit: cover;
     object-position: top;
 }
+
+.card-thumb {
+    position: relative;
+}
+
+.bookmark-form {
+    margin: 0;
+}
+
+.bookmark-form--overlay {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+}
+
+.bookmark-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.bookmark-btn--icon {
+    padding: 8px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.92);
+    color: rgba(26, 26, 26, 1);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.18);
+}
+
+.bookmark-btn--icon:hover {
+    background: rgba(255, 255, 255, 1);
+    color: rgba(127, 86, 217, 1);
+}
+
+.bookmark-btn--icon.bookmarked {
+    color: rgba(127, 86, 217, 1);
+}
+
+.bookmark-btn--icon.bookmarked .bookmark-icon {
+    fill: rgba(127, 86, 217, 1);
+}
+
+.bookmark-icon {
+    display: block;
+}

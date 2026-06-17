@@ -50,13 +50,34 @@ router.get('/', requireAuth, async function (req, res, next) {
 
     const blogs = await Blog.find().sort({date: -1}).populate("author", 'email')
 
-    res.render('blogs', {email, blogs});
+    const currentUser = await User.findOne({email});
+    const bookmarkedIds = currentUser ? currentUser.bookmarks.map((id) => id.toString()) : [];
+
+    res.render('blogs', {email, blogs, bookmarkedIds});
 });
 
 router.get('/new', requireAuth, function (req, res, next) {
     const email = req.session.user.email;
     res.render('new_blog', {email, error: null});
 
+})
+
+router.get('/bookmarks', requireAuth, async function (req, res, next) {
+    const email = req.session.user.email;
+
+    try {
+        const currentUser = await User.findOne({email}).populate({
+            path: 'bookmarks',
+            populate: {path: 'author', select: 'email'}
+        });
+        // bookmarks are pushed in save order, so reverse to show the last saved first
+        const bookmarks = currentUser ? currentUser.bookmarks.filter(Boolean).reverse() : [];
+
+        res.render('bookmarks', {email, bookmarks});
+    } catch (e) {
+        console.log(e);
+        next(e);
+    }
 })
 
 router.post('/new', requireAuth, uploadThumbnail, async function (req, res, next) {
@@ -113,8 +134,9 @@ router.get('/:blogId', requireAuth, async function (req, res, next) {
 
     const currentUser = await User.findOne({email});
     const currentUserId = currentUser ? currentUser._id.toString() : null;
+    const bookmarkedIds = currentUser ? currentUser.bookmarks.map((id) => id.toString()) : [];
 
-    res.render('blog', {email, recentBlogs, blog, currentUserId});
+    res.render('blog', {email, recentBlogs, blog, currentUserId, bookmarkedIds});
 });
 
 router.post('/:blogId/comments', requireAuth, async function (req, res, next) {
@@ -340,6 +362,34 @@ router.post('/:blogId/comments/:commentId/replies/:replyId/delete', requireAuth,
         comment.replies.pull(replyId);
         await blog.save();
         res.redirect(`/blogs/${blogId}`);
+    } catch (e) {
+        console.log(e);
+        next(e);
+    }
+});
+
+router.post('/:blogId/bookmark', requireAuth, async function (req, res, next) {
+    const email = req.session.user.email;
+    const {blogId} = req.params;
+    const returnUrl = req.body.returnUrl || `/blogs/${blogId}`;
+
+    try {
+        const user = await User.findOne({email});
+        const blog = await Blog.findById(blogId);
+
+        if (!user || !blog) {
+            return res.redirect(returnUrl);
+        }
+
+        const index = user.bookmarks.findIndex((id) => id.equals(blog._id));
+        if (index === -1) {
+            user.bookmarks.push(blog._id);
+        } else {
+            user.bookmarks.splice(index, 1);
+        }
+
+        await user.save();
+        res.redirect(returnUrl);
     } catch (e) {
         console.log(e);
         next(e);

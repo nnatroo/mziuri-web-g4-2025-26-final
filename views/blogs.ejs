@@ -87,9 +87,22 @@
     <h2 class="title">All blog posts</h2>
     <div class="blogs-grid">
         <% blogs.forEach((blog) => { %>
+            <% const isBookmarked = bookmarkedIds.includes(blog._id.toString()); %>
             <div class="standard-card">
-                <figure>
+                <figure class="card-thumb">
                     <img src="<%= blog.thumbnail || '/images/thumbnails/thumbnail-5.png' %>" alt="<%= blog.title %>">
+                    <form class="bookmark-form bookmark-form--overlay"
+                          action="/blogs/<%= blog._id %>/bookmark" method="POST">
+                        <input type="hidden" name="returnUrl" value="/blogs">
+                        <button type="submit" class="bookmark-btn bookmark-btn--icon <%= isBookmarked ? 'bookmarked' : '' %>"
+                                aria-label="<%= isBookmarked ? 'Remove bookmark' : 'Bookmark this blog' %>">
+                            <svg class="bookmark-icon" width="20" height="20" viewBox="0 0 24 24"
+                                 fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v17l-6-3.5L6 21V4Z"
+                                      stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </form>
                 </figure>
                 <div>
                     <p class="meta"><%= blog.author.email %>
