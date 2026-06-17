@@ -66,10 +66,121 @@ router.post('/new', requireAuth, async function (req, res, next) {
 router.get('/:blogId', requireAuth, async function (req, res, next) {
     const email = req.session.user.email;
     const blogId = req.params.blogId;
-    const blog = await Blog.findById(blogId).populate("author", 'email')
+    const blog = await Blog.findById(blogId)
+        .populate("author", 'email')
+        .populate("comments.author", 'email')
+        .populate("comments.replies.author", 'email')
     const recentBlogs = await Blog.find().sort({date: -1}).populate("author", 'email').limit(8)
 
-    res.render('blog', {email, recentBlogs, blog});
+    const currentUser = await User.findOne({email});
+    const currentUserId = currentUser ? currentUser._id.toString() : null;
+
+    res.render('blog', {email, recentBlogs, blog, currentUserId});
+});
+
+router.post('/:blogId/comments', requireAuth, async function (req, res, next) {
+    const email = req.session.user.email;
+    const blogId = req.params.blogId;
+    const {content} = req.body;
+
+    if (!content || !content.trim()) {
+        return res.redirect(`/blogs/${blogId}`);
+    }
+
+    try {
+        const user = await User.findOne({email});
+        const blog = await Blog.findById(blogId);
+        blog.comments.push({author: user._id, content: content.trim()});
+        await blog.save();
+        res.redirect(`/blogs/${blogId}`);
+    } catch (e) {
+        console.log(e);
+        next(e);
+    }
+});
+
+router.post('/:blogId/comments/:commentId/replies', requireAuth, async function (req, res, next) {
+    const email = req.session.user.email;
+    const {blogId, commentId} = req.params;
+    const {content} = req.body;
+
+    if (!content || !content.trim()) {
+        return res.redirect(`/blogs/${blogId}`);
+    }
+
+    try {
+        const user = await User.findOne({email});
+        const blog = await Blog.findById(blogId);
+        const comment = blog.comments.id(commentId);
+
+        if (!comment) {
+            return res.redirect(`/blogs/${blogId}`);
+        }
+
+        comment.replies.push({author: user._id, content: content.trim()});
+        await blog.save();
+        res.redirect(`/blogs/${blogId}`);
+    } catch (e) {
+        console.log(e);
+        next(e);
+    }
+});
+
+router.post('/:blogId/comments/:commentId/like', requireAuth, async function (req, res, next) {
+    const email = req.session.user.email;
+    const {blogId, commentId} = req.params;
+
+    try {
+        const user = await User.findOne({email});
+        const blog = await Blog.findById(blogId);
+        const comment = blog.comments.id(commentId);
+
+        if (!comment) {
+            return res.redirect(`/blogs/${blogId}`);
+        }
+
+        const likeIndex = comment.likes.findIndex((id) => id.equals(user._id));
+        if (likeIndex === -1) {
+            comment.likes.push(user._id);
+        } else {
+            comment.likes.splice(likeIndex, 1);
+        }
+
+        await blog.save();
+        res.redirect(`/blogs/${blogId}`);
+    } catch (e) {
+        console.log(e);
+        next(e);
+    }
+});
+
+router.post('/:blogId/comments/:commentId/replies/:replyId/like', requireAuth, async function (req, res, next) {
+    const email = req.session.user.email;
+    const {blogId, commentId, replyId} = req.params;
+
+    try {
+        const user = await User.findOne({email});
+        const blog = await Blog.findById(blogId);
+        const comment = blog.comments.id(commentId);
+        const reply = comment && comment.replies.id(replyId);
+
+        if (!reply) {
+            return res.redirect(`/blogs/${blogId}`);
+        }
+
+        const likeIndex = reply.likes.findIndex((id) => id.equals(user._id));
+        if (likeIndex === -1) {
+            reply.likes.push(user._id);
+        } else {
+            reply.likes.splice(likeIndex, 1);
+        }
+
+        await blog.save();
+        res.redirect(`/blogs/${blogId}`);
+    } catch (e) {
+        console.log(e);
+        next(e);
+    }
 });
 
 module.exports = router;
