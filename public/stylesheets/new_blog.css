@@ -41,6 +41,46 @@ textarea {
     min-height: 227px;
 }
 
+.thumbnail-field {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 1005px;
+}
+
+.thumbnail-label {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 28px;
+    color: rgba(35, 37, 54, 1);
+}
+
+.thumbnail-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 16px 24px;
+    cursor: pointer;
+}
+
+.thumbnail-input::file-selector-button {
+    background-color: rgba(26, 26, 26, 1);
+    color: rgba(255, 255, 255, 1);
+    font-family: Sen, sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    border-radius: 2px;
+    padding: 10px 18px;
+    margin-right: 16px;
+    cursor: pointer;
+    transition: 0.2s all;
+    border: 1px solid rgba(26, 26, 26, 1);
+}
+
+.thumbnail-input::file-selector-button:hover {
+    background-color: rgba(255, 255, 255, 1);
+    color: rgba(26, 26, 26, 1);
+}
+
 button {
     width: 955px;
     background-color: rgba(26, 26, 26, 1);

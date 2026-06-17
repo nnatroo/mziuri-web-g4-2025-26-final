@@ -70,6 +70,10 @@ const blogSchema = new mongoose.Schema({
         trim: true,
         maxLength: 1000,
     },
+    thumbnail: {
+        type: String,
+        default: null,
+    },
     author: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

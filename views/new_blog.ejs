@@ -25,10 +25,14 @@
             <%= error%>
         </p>
    <% } %>
-    <form action="/blogs/new" method="post" >
+    <form action="/blogs/new" method="post" enctype="multipart/form-data">
         <input type="text" name="title" id="title" placeholder="Blog Title" required>
         <input type="text" name="description" id="description" placeholder="Description" required>
         <textarea name="content" id="content" placeholder="Content" required></textarea>
+        <div class="thumbnail-field">
+            <label class="thumbnail-label" for="thumbnail">Thumbnail</label>
+            <input type="file" name="thumbnail" id="thumbnail" class="thumbnail-input" accept="image/*" required>
+        </div>
         <button type="submit" class="btn">Publish</button>
     </form>
 </div>

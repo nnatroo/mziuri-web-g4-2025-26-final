@@ -1,4 +1,6 @@
 const express = require('express');
+const path = require('path');
+const multer = require('multer');
 const router = express.Router();
 const User = require('../models/User');
 const Blog = require('../models/Blog');
@@ -9,6 +11,38 @@ const requireAuth = (req, res, next) => {
     } else {
         res.redirect('/login');
     }
+}
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, path.join(__dirname, '..', 'public', 'images', 'thumbnails'));
+    },
+    filename: function (req, file, cb) {
+        const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+        cb(null, `thumbnail-${uniqueSuffix}${path.extname(file.originalname)}`);
+    }
+});
+
+const upload = multer({
+    storage,
+    limits: {fileSize: 5 * 1024 * 1024},
+    fileFilter: function (req, file, cb) {
+        if (file.mimetype.startsWith('image/')) {
+            cb(null, true);
+        } else {
+            cb(null, false);
+        }
+    }
+});
+
+const uploadThumbnail = (req, res, next) => {
+    upload.single('thumbnail')(req, res, (err) => {
+        if (err) {
+            const email = req.session.user.email;
+            return res.render('new_blog', {email, error: 'Thumbnail upload failed. Please choose an image file under 5MB.'});
+        }
+        next();
+    });
 }
 
 router.get('/', requireAuth, async function (req, res, next) {
@@ -25,7 +59,7 @@ router.get('/new', requireAuth, function (req, res, next) {
 
 })
 
-router.post('/new', requireAuth, async function (req, res, next) {
+router.post('/new', requireAuth, uploadThumbnail, async function (req, res, next) {
     const {title, description, content} = req.body;
     const email = req.session.user.email;
 
@@ -45,12 +79,17 @@ router.post('/new', requireAuth, async function (req, res, next) {
         return res.render('new_blog', {email, error: "Content length must be less than 1000 characters"});
     }
 
+    if (!req.file) {
+        return res.render('new_blog', {email, error: "Please upload a thumbnail image"});
+    }
+
     const author = await User.findOne({email: email});
     const authorId = author._id.toString()
     const newBlogObj = {
         title,
         description,
         content,
+        thumbnail: `/images/thumbnails/${req.file.filename}`,
         author: authorId,
     }
     try {

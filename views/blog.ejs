@@ -23,7 +23,7 @@
         <% recentBlogs.forEach((blog) => { %>
             <div>
                 <figure>
-                    <img src="/images/thumbnails/thumbnail-6.png" alt="Thumbnail 6">
+                    <img src="<%= blog.thumbnail || '/images/thumbnails/thumbnail-6.png' %>" alt="<%= blog.title %>">
                 </figure>
                 <div>
                     <p class="meta"><%= blog.author.email %>

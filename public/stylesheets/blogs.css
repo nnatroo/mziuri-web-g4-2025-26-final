@@ -161,3 +161,27 @@
     grid-template-columns: 1fr 1fr 1fr;
     gap: 32px;
 }
+
+.thumbnail-wrapper {
+    width: 100%;
+    height: 228px;
+}
+
+.thumbnail-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+}
+
+.small-card figure {
+    width: 380px;
+    height: 200px;
+}
+
+.small-card figure img {
+    width: 380px;
+    height: 200px;
+    object-fit: cover;
+    object-position: top;
+}

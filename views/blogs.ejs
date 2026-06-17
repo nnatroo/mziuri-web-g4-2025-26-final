@@ -27,7 +27,7 @@
         <div class="col-1">
             <div>
                 <figure class="thumbnail-wrapper">
-                    <img src="/images/thumbnails/thumbnail-1.png" alt="Thumbnail 1">
+                    <img src="<%= blogs[0].thumbnail || '/images/thumbnails/thumbnail-1.png' %>" alt="<%= blogs[0].title %>">
                 </figure>
                 <div class="blog-meta">
                     <p><%= blogs[0].author.email %></p> <span> • </span>
@@ -45,7 +45,7 @@
         <div class="col-2">
             <div class="small-card">
                 <figure>
-                    <img src="/images/thumbnails/thumbnail-2.png" alt="Thumbnail 2">
+                    <img src="<%= blogs[1].thumbnail || '/images/thumbnails/thumbnail-2.png' %>" alt="<%= blogs[1].title %>">
                 </figure>
                 <div class="content-wrapper">
                     <p class="meta"><%= blogs[1].author.email %>
@@ -56,7 +56,7 @@
             </div>
             <div class="small-card">
                 <figure>
-                    <img src="/images/thumbnails/thumbnail-3.png" alt="Thumbnail 3">
+                    <img src="<%= blogs[2].thumbnail || '/images/thumbnails/thumbnail-3.png' %>" alt="<%= blogs[2].title %>">
                 </figure>
                 <div class="content-wrapper">
                     <p class="meta"><%= blogs[2].author.email %>
@@ -69,7 +69,7 @@
     </div>
     <div class="wide-card">
         <figure>
-            <img src="/images/thumbnails/thumbnail-4.png" alt="Thumbnail 4">
+            <img src="<%= blogs[3].thumbnail || '/images/thumbnails/thumbnail-4.png' %>" alt="<%= blogs[3].title %>">
         </figure>
         <div class="content-wrapper">
             <p class="meta"><%= blogs[3].author.email %>
@@ -89,7 +89,7 @@
         <% blogs.forEach((blog) => { %>
             <div class="standard-card">
                 <figure>
-                    <img src="/images/thumbnails/thumbnail-5.png" alt="Thumbnail 5">
+                    <img src="<%= blog.thumbnail || '/images/thumbnails/thumbnail-5.png' %>" alt="<%= blog.title %>">
                 </figure>
                 <div>
                     <p class="meta"><%= blog.author.email %>

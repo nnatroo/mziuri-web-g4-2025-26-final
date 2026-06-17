@@ -1,3 +1,6 @@
 /.idea
 /node_modules
 .env
+
+# Uploaded blog thumbnails (keep seed thumbnail-1..6.png)
+/public/images/thumbnails/thumbnail-*-*.png
