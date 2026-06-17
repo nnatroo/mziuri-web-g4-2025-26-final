@@ -40,12 +40,19 @@
                             <img src="/images/arrow-up-icon.svg" alt="Arrow up icon">
                         </figure>
                         <p><%= blog.description %></p>
+                        <div class="my-blog-actions">
+                            <form class="blog-delete-form" action="/blogs/<%= blog._id %>/delete" method="POST">
+                                <button type="submit" class="blog-delete-btn">Delete</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             <% }) %>
         </div>
     <% } %>
 </section>
+
+<script src="/javascripts/blog-delete.js"></script>
 
 <%- include('partials/footer'); %>
 

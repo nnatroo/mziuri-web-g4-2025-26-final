@@ -69,6 +69,35 @@
     gap: 24px;
 }
 
+.blog-detail-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.blog-delete-form {
+    margin: 0;
+}
+
+.blog-delete-btn {
+    background: none;
+    border: 1px solid #B42318;
+    border-radius: 8px;
+    color: #B42318;
+    padding: 10px 18px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.blog-delete-btn:hover {
+    background: #B42318;
+    color: #fff;
+}
+
 .bookmark-form {
     margin: 0;
     flex-shrink: 0;

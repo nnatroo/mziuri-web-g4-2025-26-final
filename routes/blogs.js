@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const multer = require('multer');
 const router = express.Router();
 const User = require('../models/User');
@@ -406,6 +407,41 @@ router.post('/:blogId/bookmark', requireAuth, async function (req, res, next) {
 
         await user.save();
         res.redirect(returnUrl);
+    } catch (e) {
+        console.log(e);
+        next(e);
+    }
+});
+
+router.post('/:blogId/delete', requireAuth, async function (req, res, next) {
+    const email = req.session.user.email;
+    const {blogId} = req.params;
+
+    try {
+        const user = await User.findOne({email});
+        const blog = await Blog.findById(blogId);
+
+        if (!user || !blog) {
+            return res.redirect('/blogs/my-blogs');
+        }
+
+        // only the blog's author may delete it
+        if (!blog.author.equals(user._id)) {
+            return res.redirect(`/blogs/${blogId}`);
+        }
+
+        await Blog.findByIdAndDelete(blogId);
+
+        // remove this blog from every user's bookmarks
+        await User.updateMany({bookmarks: blogId}, {$pull: {bookmarks: blogId}});
+
+        // remove the uploaded thumbnail file (only auto-generated uploads, never the seed images)
+        if (blog.thumbnail && /\/thumbnail-\d+-\d+\.[^/]+$/.test(blog.thumbnail)) {
+            const thumbPath = path.join(__dirname, '..', 'public', blog.thumbnail);
+            fs.unlink(thumbPath, () => {});
+        }
+
+        res.redirect('/blogs/my-blogs');
     } catch (e) {
         console.log(e);
         next(e);

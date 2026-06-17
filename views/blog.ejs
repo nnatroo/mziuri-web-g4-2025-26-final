@@ -44,22 +44,30 @@
             • <%= blog.date.getDate() %> <%= blog.date.toLocaleString('default', {month: 'short'}) %> <%= blog.date.getFullYear() %>
         </p>
         <% const isBookmarked = bookmarkedIds.includes(blog._id.toString()); %>
+        <% const isOwner = currentUserId && blog.author && blog.author._id && currentUserId === blog.author._id.toString(); %>
         <div class="blog-content-title-wrapper">
             <h2 class="blog-content-title">
                 <%= blog.title %>
             </h2>
-            <form class="bookmark-form" action="/blogs/<%= blog._id %>/bookmark" method="POST">
-                <input type="hidden" name="returnUrl" value="/blogs/<%= blog._id %>">
-                <button type="submit" class="bookmark-btn <%= isBookmarked ? 'bookmarked' : '' %>"
-                        aria-label="<%= isBookmarked ? 'Remove bookmark' : 'Bookmark this blog' %>">
-                    <svg class="bookmark-icon" width="18" height="18" viewBox="0 0 24 24"
-                         fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6 4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v17l-6-3.5L6 21V4Z"
-                              stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                    </svg>
-                    <span class="bookmark-label"><%= isBookmarked ? 'Saved' : 'Save' %></span>
-                </button>
-            </form>
+            <div class="blog-detail-actions">
+                <form class="bookmark-form" action="/blogs/<%= blog._id %>/bookmark" method="POST">
+                    <input type="hidden" name="returnUrl" value="/blogs/<%= blog._id %>">
+                    <button type="submit" class="bookmark-btn <%= isBookmarked ? 'bookmarked' : '' %>"
+                            aria-label="<%= isBookmarked ? 'Remove bookmark' : 'Bookmark this blog' %>">
+                        <svg class="bookmark-icon" width="18" height="18" viewBox="0 0 24 24"
+                             fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v17l-6-3.5L6 21V4Z"
+                                  stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                        </svg>
+                        <span class="bookmark-label"><%= isBookmarked ? 'Saved' : 'Save' %></span>
+                    </button>
+                </form>
+                <% if (isOwner) { %>
+                    <form class="blog-delete-form" action="/blogs/<%= blog._id %>/delete" method="POST">
+                        <button type="submit" class="blog-delete-btn">Delete</button>
+                    </form>
+                <% } %>
+            </div>
         </div>
         <div>
             <p class="blog-content-text">
@@ -255,6 +263,7 @@
     </div>
 </div>
 
+<script src="/javascripts/blog-delete.js"></script>
 <script src="/javascripts/comments.js"></script>
 
 <%- include('partials/footer'); %>

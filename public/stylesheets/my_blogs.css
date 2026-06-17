@@ -21,3 +21,29 @@
     color: rgba(127, 86, 217, 1);
     text-decoration: underline;
 }
+
+.my-blog-actions {
+    margin-top: 16px;
+}
+
+.blog-delete-form {
+    margin: 0;
+}
+
+.blog-delete-btn {
+    background: none;
+    border: 1px solid #B42318;
+    border-radius: 8px;
+    color: #B42318;
+    padding: 8px 16px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.blog-delete-btn:hover {
+    background: #B42318;
+    color: #fff;
+}
